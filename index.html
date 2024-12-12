@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Music Player</title>
+  <!-- Link to the compiled CSS (main.css) -->
+  <link rel="stylesheet" href="main.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Search Bar Container -->
+    <div class="search-container">
+      <input v-model="searchQuery" @input="searchSongs" placeholder="Search for songs..." />
+    </div>
+
+    <!-- Song List -->
+    <ul class="song-list">
+      <li v-for="(track, index) in searchResults" :key="index" @click="selectTrack(track)">
+        <img :src="track.cover" alt="cover" />
+        <div>{{ track.name }} - {{ track.artist }}</div>
+      </li>
+    </ul>
+
+    <!-- Audio Controls -->
+    <div v-if="currentTrack">
+      <img :src="currentTrack.cover" alt="cover" style="width: 100px; height: 100px;" />
+      <div>{{ currentTrack.name }} - {{ currentTrack.artist }}</div>
+      <audio ref="audio" :src="currentTrack.source" controls></audio>
+      <div class="controls">
+        <button @click="prevTrack">Previous</button>
+        <button @click="play">{{ isTimerPlaying ? 'Pause' : 'Play' }}</button>
+        <button @click="nextTrack">Next</button>
+        <button @click="downloadTrack">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link to the external JS file (script.js) -->
+  <script src="script.js"></script>
+</body>
+</html>
